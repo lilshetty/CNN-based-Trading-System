@@ -1,0 +1,83 @@
+flowchart TD
+    %% Data Sources
+    subgraph DS[Data Sources]
+        A1[Market Data Feed] 
+        A2[Alternative Data]
+        A3[Technical Indicators]
+    end
+
+    %% Data Collection
+    subgraph DC[Data Collection Module]
+        B1[Data Ingestion API]
+        B2[Data Queue]
+        B3[Data Validator]
+    end
+
+    %% Preprocessing Pipeline
+    subgraph PP[Preprocessing Pipeline]
+        C1[Data Cleaner]
+        C2[Feature Engineering]
+        C3[Image Generator]
+    end
+
+    %% CNN Model
+    subgraph CM[CNN Model]
+        D1[Input Layer]
+        D2[Convolutional Layers]
+        D3[Output Layer]
+    end
+
+    %% Trading Logic
+    subgraph TL[Trading Logic]
+        E1[Decision Maker]
+        E2[Risk Manager]
+        subgraph ES[Evaluation System]
+            E3[Signal Generator]
+            E4[Position Sizer]
+        end
+    end
+
+    %% Order Execution
+    subgraph OE[Order Execution]
+        F1[Order Generator]
+        F2[Trade Executor]
+        F3[Order Monitor]
+    end
+
+    %% Monitoring System
+    subgraph MS[Monitoring System]
+        G1[Performance Tracker]
+        G2[Risk Monitor]
+        G3[Alert System]
+    end
+
+    %% Connections
+    A1 --> B1
+    A2 --> B1
+    A3 --> B1
+    B1 --> B2 --> B3
+    B3 --> C1 --> C2 --> C3
+    C3 --> D1 --> D2 --> D3
+    D3 --> E1
+    E1 --> E3
+    E2 --> E3
+    E3 --> E4
+    E4 --> F1
+    F1 --> F2 --> F3
+    F3 --> G1
+    F3 --> G2
+    G1 --> G3
+    G2 --> G3
+    G3 -.-> E2
+    G1 -.-> D2
+
+    %% Styling
+    classDef primary fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:white
+    classDef secondary fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:white
+    classDef alert fill:#F44336,stroke:#D32F2F,stroke-width:2px,color:white
+    classDef monitor fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:white
+
+    class DS,DC,PP,CM,TL,OE,MS primary
+    class E1,E2,E3,E4 secondary
+    class F1,F2,F3 alert
+    class G1,G2,G3 monitor
