@@ -1,4 +1,4 @@
-# model_training.py
+# model_training.py 
 
 import tensorflow as tf
 from tensorflow.keras import layers, models
@@ -86,7 +86,7 @@ class CNNTrading:
         
         return model
     
-    def train_model(self, epochs=100):
+    def train_model(self, epochs=150):
         """Train the model"""
         # Load dataset
         train_ds, val_ds, test_ds = self.load_dataset()
