@@ -144,6 +144,72 @@ class DataPreparation:
             print(f"Error calculating indicators: {str(e)}")
             return None
 
+
+    # def calculate_indicators(self, data):
+    #     """Calculate technical indicators with proper window size validation"""
+    #     if len(data) < self.window_size:
+    #         print(f"Warning: Data length ({len(data)}) is smaller than window size ({self.window_size})")
+    #         return None
+            
+    #     df = pd.DataFrame()
+        
+    #     try:
+    #         # Use dynamic window sizes based on available data
+    #         max_window = min(21, len(data) // 3)  # Ensure window isn't too large
+    #         window_sizes = [w for w in [5, 8, 13, 21] if w <= max_window]
+            
+    #         for window in window_sizes:
+    #             # Trend Indicators
+    #             df[f'sma_{window}'] = data['Close'].rolling(window=window, min_periods=1).mean()
+    #             df[f'ema_{window}'] = data['Close'].ewm(span=window, adjust=False, min_periods=1).mean()
+                
+    #             # Momentum Indicators
+    #             df[f'rsi_{window}'] = ta.momentum.rsi(data['Close'], window=window, fillna=True)
+    #             df[f'roc_{window}'] = data['Close'].pct_change(periods=window).fillna(0)
+                
+    #             # Volatility Indicators
+    #             df[f'bbands_upper_{window}'] = ta.volatility.bollinger_hband(
+    #                 data['Close'], window=window, fillna=True)
+    #             df[f'bbands_lower_{window}'] = ta.volatility.bollinger_lband(
+    #                 data['Close'], window=window, fillna=True)
+                
+    #             # Volume Indicators
+    #             df[f'volume_sma_{window}'] = data['Volume'].rolling(
+    #                 window=window, min_periods=1).mean()
+            
+    #         # Additional Indicators
+    #         df['close_to_sma'] = data['Close'] / df['sma_5'] - 1
+    #         df['volume_price_ratio'] = data['Volume'] / data['Close']
+    #         df['high_low_ratio'] = data['High'] / data['Low']
+    #         df['daily_return'] = data['Close'].pct_change().fillna(0)
+            
+    #         # Handle missing values
+    #         df = df.fillna(method='ffill').fillna(0)
+            
+    #         # Select 12 most important features
+    #         important_features = [
+    #             'sma_5', 'ema_5', 'rsi_5', 'roc_5',
+    #             'bbands_upper_5', 'bbands_lower_5',
+    #             'volume_sma_5', 'close_to_sma',
+    #             'volume_price_ratio', 'high_low_ratio',
+    #             'daily_return', 'volume_sma_8'
+    #         ]
+            
+    #         # Ensure we have exactly 12 features
+    #         available_features = [col for col in important_features if col in df.columns]
+    #         if len(available_features) < 12:
+    #             missing_count = 12 - len(available_features)
+    #             # Add duplicate features if needed
+    #             for i in range(missing_count):
+    #                 df[f'extra_feature_{i}'] = df[available_features[0]]
+    #                 available_features.append(f'extra_feature_{i}')
+            
+    #         return df[available_features[:12]]  # Ensure exactly 12 features
+            
+    #     except Exception as e:
+    #         print(f"Error calculating indicators: {str(e)}")
+    #         return None
+        
     def create_image(self, indicators_data):
         """Convert indicators to image format"""
         if len(indicators_data) < self.window_size:
